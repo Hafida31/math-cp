@@ -1,3 +1,41 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Animations personnalisées pour l'application de chantier */
+@keyframes bounce-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Couleurs de fond adaptées pour TSA/TDAH */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Animations douces pour éviter la surcharge sensorielle */
+* {
+  transition-duration: 300ms;
+}
+
+/* Style pour les nombres en input - grande taille et claire */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 1;
+  height: 40px;
+}
+
+/* Focus visible pour l'accessibilité */
+input:focus,
+button:focus {
+  outline: 4px solid rgba(59, 130, 246, 0.5);
+  outline-offset: 2px;
+}
