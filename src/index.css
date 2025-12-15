@@ -2,17 +2,493 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Animations personnalisées pour l'application de chantier */
-@keyframes bounce-slow {
+/* ===== ANIMATIONS PERSONNALISÉES POUR PELLETEUSES ===== */
+
+/* Animation de creusage - rotation du bras */
+@keyframes excavator-dig {
   0%, 100% {
-    transform: translateY(0);
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-15deg);
   }
   50% {
-    transform: translateY(-10px);
+    transform: rotate(-25deg);
+  }
+  75% {
+    transform: rotate(-15deg);
   }
 }
 
-/* Couleurs de fond adaptées pour TSA/TDAH */
+/* Animation du bras principal lors du creusage */
+.excavator-digging .arm {
+  animation: excavator-dig 2s ease-in-out infinite;
+}
+
+/* Animation du godet (seau) lors du creusage */
+@keyframes bucket-scoop {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(25deg);
+  }
+}
+
+.excavator-digging .bucket {
+  animation: bucket-scoop 1.5s ease-in-out infinite;
+}
+
+/* Animation de célébration - mouvement de danse */
+@keyframes excavator-celebrate {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-10px) rotate(-5deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-10px) rotate(5deg);
+  }
+}
+
+.excavator-celebrating {
+  animation: excavator-celebrate 1s ease-in-out infinite;
+}
+
+/* Animation rotation des roues de chenilles */
+@keyframes tracks-move {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-10px);
+  }
+}
+
+.excavator-digging .tracks circle {
+  animation: tracks-move 0.5s linear infinite;
+}
+
+/* ===== ANIMATIONS DE CÉLÉBRATION (PELLETEUSES LATÉRALES) ===== */
+
+.celebration-excavators {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 1rem 0;
+}
+
+.excavator-left {
+  animation: slide-in-left 0.8s ease-out;
+}
+
+.excavator-right {
+  animation: slide-in-right 0.8s ease-out;
+}
+
+@keyframes slide-in-left {
+  0% {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-right {
+  0% {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* ===== BARRE DE PROGRESSION ===== */
+
+.progress-container {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 3px solid #e5e7eb;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  color: #374151;
+  font-size: 1.125rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 2rem;
+  background: #e5e7eb;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 2px solid #d1d5db;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #34d399);
+  transition: width 0.6s ease-out;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 0.5rem;
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3);
+}
+
+.streak-indicator {
+  margin-top: 0.75rem;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.25rem;
+  color: #f59e0b;
+  animation: pulse-glow 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+/* ===== INTERFACE PRINCIPALE ===== */
+
+/* Barre du haut */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.home-button {
+  background: white;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 4px solid #d1d5db;
+  transition: all 0.3s ease;
+}
+
+.home-button:hover {
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  transform: scale(1.05);
+}
+
+.score-display {
+  background: white;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 4px solid #fbbf24;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sound-button {
+  background: white;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 4px solid #d1d5db;
+  transition: all 0.3s ease;
+}
+
+.sound-button:hover {
+  transform: scale(1.05);
+}
+
+/* ===== ZONE D'EXERCICE ===== */
+
+.level-indicator {
+  display: inline-block;
+  background: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 4px solid #3b82f6;
+}
+
+.exercise-box {
+  background: white;
+  border-radius: 2rem;
+  padding: 2rem;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  border: 4px solid #fb923c;
+  margin-bottom: 2rem;
+}
+
+.answer-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.answer-input {
+  width: 8rem;
+  height: 8rem;
+  font-size: 3.75rem;
+  text-align: center;
+  border: 8px solid #fb923c;
+  border-radius: 2rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  background: #fffbeb;
+}
+
+.answer-input:focus {
+  border-color: #ea580c;
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(251, 146, 60, 0.2);
+  transform: scale(1.05);
+}
+
+.answer-input:disabled {
+  background: #f3f4f6;
+  opacity: 0.6;
+}
+
+.verify-button {
+  padding: 1.5rem 3rem;
+  background: #fb923c;
+  color: white;
+  border-radius: 2rem;
+  font-size: 1.875rem;
+  font-weight: bold;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  border: 4px solid #ea580c;
+  transition: all 0.3s ease;
+}
+
+.verify-button:hover:not(:disabled) {
+  background: #f97316;
+  transform: scale(1.05);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.verify-button:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.verify-button:disabled {
+  background: #d1d5db;
+  cursor: not-allowed;
+  border-color: #9ca3af;
+}
+
+/* ===== TECHNIQUE DE CALCUL ===== */
+
+.technique-box {
+  background: linear-gradient(135deg, #fce7f3, #e9d5ff);
+  border: 4px solid #a855f7;
+  border-radius: 2rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  animation: slide-down 0.5s ease-out;
+}
+
+@keyframes slide-down {
+  0% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.technique-steps {
+  margin: 1.5rem 0;
+}
+
+.technique-step {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 1rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.step-number {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.step-text {
+  color: #374151;
+  font-weight: 500;
+}
+
+.step-text strong {
+  color: #7c3aed;
+  font-size: 1.75rem;
+}
+
+.technique-arrow {
+  text-align: center;
+  font-size: 2rem;
+  color: #a855f7;
+  margin: 0.5rem 0;
+}
+
+.technique-explanation {
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-top: 1rem;
+  font-size: 1.125rem;
+  color: #6b21a8;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ===== ZONE PELLETEUSE ===== */
+
+.excavator-zone {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border-radius: 2rem;
+  padding: 2rem;
+  border: 4px solid #d97706;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== FEEDBACK ET RÉSULTATS ===== */
+
+.result-box {
+  background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+  border: 4px solid #10b981;
+  border-radius: 2rem;
+  padding: 2rem;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  animation: pop-in 0.5s ease-out;
+}
+
+@keyframes pop-in {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.feedback-box {
+  font-size: 1.875rem;
+  font-weight: bold;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 4px solid;
+  text-align: center;
+  animation: fade-in 0.3s ease-out;
+}
+
+.feedback-success {
+  background: #d1fae5;
+  color: #065f46;
+  border-color: #10b981;
+}
+
+.feedback-retry {
+  background: #dbeafe;
+  color: #1e40af;
+  border-color: #3b82f6;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ===== BADGES ===== */
+
+.badges-display {
+  background: white;
+  border-radius: 2rem;
+  padding: 2rem;
+  margin-top: 2rem;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+  border: 3px solid #fbbf24;
+}
+
+.badge-item {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border: 3px solid #f59e0b;
+  border-radius: 1rem;
+  padding: 1rem;
+  text-align: center;
+  min-width: 120px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  animation: badge-appear 0.5s ease-out;
+}
+
+@keyframes badge-appear {
+  0% {
+    transform: scale(0) rotate(-180deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* ===== BOUTONS DE NIVEAU ===== */
+
+.level-button {
+  transform: scale(1);
+  transition: all 0.3s ease;
+}
+
+.level-button:hover {
+  transform: scale(1.05);
+}
+
+.level-button:active {
+  transform: scale(0.95);
+}
+
+/* ===== ADAPTATIONS TSA/TDAH ===== */
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -23,7 +499,7 @@ body {
 
 /* Animations douces pour éviter la surcharge sensorielle */
 * {
-  transition-duration: 300ms;
+  transition-timing-function: ease-in-out;
 }
 
 /* Style pour les nombres en input - grande taille et claire */
@@ -38,4 +514,65 @@ input:focus,
 button:focus {
   outline: 4px solid rgba(59, 130, 246, 0.5);
   outline-offset: 2px;
+}
+
+/* Réduire les mouvements pour les utilisateurs sensibles */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+@media (max-width: 768px) {
+  .answer-input {
+    width: 6rem;
+    height: 6rem;
+    font-size: 3rem;
+  }
+
+  .verify-button {
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+  }
+
+  .technique-step {
+    font-size: 1.125rem;
+  }
+
+  .step-text strong {
+    font-size: 1.25rem;
+  }
+}
+
+/* ===== ANIMATIONS DE PRÉCHARGEMENT ===== */
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* Animation douce d'apparition */
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
